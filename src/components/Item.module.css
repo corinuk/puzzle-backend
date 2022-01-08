@@ -1,0 +1,27 @@
+.link {
+  text-decoration: none;
+}
+.item {
+  display: flex;
+  margin-bottom: 10px;
+}
+.img {
+  background-color: yellowgreen;
+  width: 150px;
+  height: 150px;
+}
+.details {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.detail {
+  color: black;
+}
+.prevPriceClass {
+  margin-top: 5px;
+}
+.deleteBtn {
+  height: 50px;
+  margin-left: 20px;
+}

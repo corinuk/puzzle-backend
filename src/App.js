@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import AppRouter from "routes/Router";
+import { authService, authStateChanged } from "fb";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    authStateChanged(
+      authService,
+      (user) => {
+        if (user) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+        setLoading(false);
+      },
+      (err) => {
+        console.error(err);
+      },
+      (complete) => {
+        console.log(complete);
+      }
+    );
+  }, []);
+
+  return <>{loading ? "Loading..." : <AppRouter isLoggedIn={isLoggedIn} />}</>;
 }
 
 export default App;

@@ -1,0 +1,24 @@
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input {
+  height: 30px;
+  margin-top: 20px;
+}
+.uploadForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+.submitBtn {
+  background-color: rgb(10, 194, 250);
+  color: white;
+  border: none;
+}
+.imgUploadBtn {
+  display: none;
+}
