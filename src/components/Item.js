@@ -1,9 +1,20 @@
 import PropTypes from "prop-types";
 import styles from "components/Item.module.css";
-import { dbService } from "fb";
+import { dbService, storageService } from "fb";
 import { deleteDoc, doc, query } from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 
-function Item({ foodImg, id, menu, place, address, prevPrice, saledPrice }) {
+function Item({
+  id,
+  menu,
+  place,
+  address,
+  prevPrice,
+  saledPrice,
+  deadline,
+  fileURL,
+  createdAt,
+}) {
   const {
     link,
     img,
@@ -16,14 +27,19 @@ function Item({ foodImg, id, menu, place, address, prevPrice, saledPrice }) {
     addressClass,
     prevPriceClass,
     saledPriceClass,
+    deadlineClass,
     deleteBtn,
   } = styles;
 
   const onClick = async (event) => {
-    if (window.confirm("ㄹㅇ 삭제할꺼?")) {
+    if (
+      window.confirm("ㄹㅇ 삭제할꺼? ( 절대 되돌릴 수 없으니 잘 생각해야함 )")
+    ) {
       const item = event.target.parentNode.parentNode.parentNode;
       const q = query(doc(dbService, "foods", `${id}`));
       item.remove();
+      const fileRef = ref(storageService, `/images/${createdAt}`);
+      await deleteObject(fileRef);
       await deleteDoc(q);
       window.location.reload();
     } else {
@@ -34,11 +50,7 @@ function Item({ foodImg, id, menu, place, address, prevPrice, saledPrice }) {
   return (
     <div className={link}>
       <div className={item}>
-        <img
-          alt="img"
-          className={img}
-          src="https://i.stack.imgur.com/BwiAz.png"
-        />
+        <img alt="img" className={img} src={fileURL} />
         <div className={details}>
           <span className={`${detail} ${idClass}`}>id : {id}</span>
           <span className={`${detail} ${menuClass}`}>{menu}</span>
@@ -49,6 +61,9 @@ function Item({ foodImg, id, menu, place, address, prevPrice, saledPrice }) {
           </span>
           <span className={`${detail} ${saledPriceClass}`}>
             할인가 : {Number(`${saledPrice}`).toLocaleString("en")}원
+          </span>
+          <span className={`${detail} ${deadlineClass}`}>
+            마감시간 : {deadline}
           </span>
         </div>
         <button className={deleteBtn} onClick={onClick}>
@@ -64,6 +79,7 @@ Item.propTypes = {
   place: PropTypes.string.isRequired,
   prevPrice: PropTypes.number.isRequired,
   saledPrice: PropTypes.number.isRequired,
+  deadline: PropTypes.string.isRequired,
 };
 
 export default Item;

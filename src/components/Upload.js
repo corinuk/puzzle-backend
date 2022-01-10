@@ -1,29 +1,31 @@
+import ImgUpload from "components/ImgUpload";
+
 function Upload({
   onSubmit,
   uploadForm,
   onUploadBtnClicked,
   imgUploadBtn,
-  imgInputRef,
   onButtonClick,
   menu,
   place,
   address,
   price,
   saledPrice,
+  deadline,
+  file,
+  setFile,
   onChange,
   submitBtn,
 }) {
   return (
     <form onSubmit={onSubmit} className={uploadForm}>
-      <input
-        type="file"
-        accept="image/*"
-        name="foodImg"
-        onChange={onUploadBtnClicked}
-        className={imgUploadBtn}
-        ref={imgInputRef}
-      ></input>
-      <input type="button" onClick={onButtonClick} value="사진 업로드" />
+      <ImgUpload
+        onUploadBtnClicked={onUploadBtnClicked}
+        imgUploadBtn={imgUploadBtn}
+        onButtonClick={onButtonClick}
+        file={file}
+        setFile={setFile}
+      />
       <input
         required
         name="menu"
@@ -63,6 +65,14 @@ function Upload({
         onChange={onChange}
         type="number"
         placeholder="할인된 가격"
+      />
+      <input
+        required
+        name="deadline"
+        value={deadline}
+        onChange={onChange}
+        type="text"
+        placeholder="마감시간"
       />
       <input className={submitBtn} type="submit" value="올리기" />
     </form>

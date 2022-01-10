@@ -29,17 +29,32 @@ function AllItems() {
 
   return (
     <div style={{ marginTop: "20px" }}>
-      {foods.map(({ id, menu, place, address, price, saledPrice }) => (
-        <Item
-          id={id}
-          key={id}
-          menu={menu}
-          place={place}
-          address={address}
-          prevPrice={Number(price)}
-          saledPrice={Number(saledPrice)}
-        />
-      ))}
+      {foods.map(
+        ({
+          id,
+          menu,
+          place,
+          address,
+          price,
+          saledPrice,
+          deadline,
+          fileURL,
+          createdAt,
+        }) => (
+          <Item
+            id={id}
+            key={id}
+            menu={menu}
+            place={place}
+            address={address}
+            prevPrice={Number(price)}
+            saledPrice={Number(saledPrice)}
+            deadline={deadline}
+            fileURL={fileURL}
+            createdAt={createdAt}
+          />
+        )
+      )}
     </div>
   );
 }

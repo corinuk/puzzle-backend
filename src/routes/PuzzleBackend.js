@@ -1,48 +1,46 @@
 import { dbService } from "fb";
+import { storageService } from "fb";
 import { addDoc, collection } from "firebase/firestore";
-import React, { useRef, useState } from "react";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import React, { useState } from "react";
 import styles from "routes/PuzzleBackend.module.css";
 import Upload from "components/Upload";
 import AllItems from "components/AllItems";
 
 function PuzzleBackend() {
+  const [file, setFile] = useState(null);
   const [menu, setMenu] = useState("");
   const [place, setPlace] = useState("");
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState("");
   const [saledPrice, setSaledPrice] = useState("");
-
-  const imgInputRef = useRef(null);
+  const [deadline, setDeadline] = useState("");
 
   const { uploadForm, submitBtn, imgUploadBtn } = styles;
 
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
+      const now = Date.now();
+      const fileRef = ref(storageService, `/images/${now}`);
+      const response = await uploadString(fileRef, file, "data_url");
+      console.log(response);
+      const fileURL = await getDownloadURL(response.ref);
+      console.log(fileURL);
       await addDoc(collection(dbService, "foods"), {
         menu,
         place,
         address,
         price,
         saledPrice,
-        createdAt: Date.now(),
+        deadline,
+        createdAt: now,
+        fileURL,
       });
       window.location.reload();
     } catch (error) {
       console.error("Error adding document: ", error);
     }
-
-    setMenu("");
-    setPlace("");
-    setAddress("");
-    setPrice("");
-    setSaledPrice("");
-  };
-  const onUploadBtnClicked = (event) => {
-    const img = event.target.files[0];
-    console.log(event.target.files);
-    const formData = new FormData();
-    formData.append("file", img);
   };
   const onChange = (event) => {
     const {
@@ -59,11 +57,9 @@ function PuzzleBackend() {
       setPrice(value);
     } else if (name === "saledPrice") {
       setSaledPrice(value);
+    } else if (name === "deadline") {
+      setDeadline(value);
     }
-  };
-  const onButtonClick = (event) => {
-    event.preventDefault();
-    imgInputRef.current.click();
   };
 
   return (
@@ -72,15 +68,15 @@ function PuzzleBackend() {
       <Upload
         onSubmit={onSubmit}
         uploadForm={uploadForm}
-        onUploadBtnClicked={onUploadBtnClicked}
         imgUploadBtn={imgUploadBtn}
-        imgInputRef={imgInputRef}
-        onButtonClick={onButtonClick}
         menu={menu}
         place={place}
         address={address}
         price={price}
         saledPrice={saledPrice}
+        deadline={deadline}
+        file={file}
+        setFile={setFile}
         onChange={onChange}
         submitBtn={submitBtn}
       />

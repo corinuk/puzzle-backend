@@ -6,7 +6,7 @@
   margin-bottom: 10px;
 }
 .img {
-  background-color: yellowgreen;
+  margin-right: 20px;
   width: 150px;
   height: 150px;
 }
@@ -24,4 +24,8 @@
 .deleteBtn {
   height: 50px;
   margin-left: 20px;
+}
+.deadlineClass {
+  font-weight: 700;
+  color: red;
 }
