@@ -21,12 +21,10 @@ function PuzzleBackend() {
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      const now = Date.now();
-      const fileRef = ref(storageService, `/images/${now}`);
+      const createdAt = Date.now();
+      const fileRef = ref(storageService, `/images/${createdAt}`);
       const response = await uploadString(fileRef, file, "data_url");
-      console.log(response);
       const fileURL = await getDownloadURL(response.ref);
-      console.log(fileURL);
       await addDoc(collection(dbService, "foods"), {
         menu,
         place,
@@ -34,7 +32,7 @@ function PuzzleBackend() {
         price,
         saledPrice,
         deadline,
-        createdAt: now,
+        createdAt,
         fileURL,
       });
       window.location.reload();

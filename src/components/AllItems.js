@@ -13,7 +13,6 @@ function AllItems() {
         ...doc.data(),
         id: doc.id,
       };
-
       setFoods((prev) =>
         [foodObj, ...prev].sort(function (a, b) {
           return b.createdAt - a.createdAt;
