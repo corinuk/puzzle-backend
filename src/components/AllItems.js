@@ -58,11 +58,10 @@ function AllItems() {
     intersection = order_createdAt.filter((element) =>
       food_createdAt.map((e) => e.createdAt === element.createdAt)
     );
-    console.log(intersection);
-    intersection.map(async (e) => {
-      const fileRef = ref(storageService, `/images/${e.createdAt}`);
-      const q = query(doc(dbService, "foods", `${e.id}`));
-      const q2 = query(doc(dbService, "orders", `${e.id_order}`));
+    intersection.map(async ({ createdAt, id, id_order }) => {
+      const fileRef = ref(storageService, `/images/${createdAt}`);
+      const q = query(doc(dbService, "foods", `${id}`));
+      const q2 = query(doc(dbService, "orders", `${id_order}`));
       await deleteObject(fileRef);
       await deleteDoc(q);
       await deleteDoc(q2);

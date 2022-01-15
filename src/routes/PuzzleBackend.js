@@ -23,8 +23,15 @@ function PuzzleBackend() {
     try {
       const createdAt = Date.now();
       const fileRef = ref(storageService, `/images/${createdAt}`);
+      const fileRef_stack = ref(storageService, `/images_stack/${createdAt}`);
       const response = await uploadString(fileRef, file, "data_url");
+      const response_stack = await uploadString(
+        fileRef_stack,
+        file,
+        "data_url"
+      );
       const fileURL = await getDownloadURL(response.ref);
+      const fileURL_stack = await getDownloadURL(response_stack.ref);
       await addDoc(collection(dbService, "foods"), {
         menu,
         place,
@@ -34,6 +41,7 @@ function PuzzleBackend() {
         deadline,
         createdAt,
         fileURL,
+        fileURL_stack,
       });
       window.location.reload();
     } catch (error) {
