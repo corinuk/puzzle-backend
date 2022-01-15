@@ -36,8 +36,8 @@ function Item({
       window.confirm("ㄹㅇ 삭제할꺼? ( 절대 되돌릴 수 없으니 잘 생각해야함 )")
     ) {
       const item = event.target.parentNode.parentNode.parentNode;
-      const q = query(doc(dbService, "foods", `${id}`));
       item.remove();
+      const q = query(doc(dbService, "foods", `${id}`));
       const fileRef = ref(storageService, `/images/${createdAt}`);
       await deleteObject(fileRef);
       await deleteDoc(q);

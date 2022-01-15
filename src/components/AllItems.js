@@ -1,11 +1,22 @@
 import Item from "components/Item";
-import { dbService } from "fb";
-import { collection, getDocs, query } from "firebase/firestore";
+import { dbService, storageService } from "fb";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  doc,
+  deleteDoc,
+  getDocs,
+  limit,
+} from "firebase/firestore";
+import { deleteObject, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 
 function AllItems() {
   const [foods, setFoods] = useState([]);
-  const getFoods = async () => {
+
+  const deleteFood = async () => {
     const q = query(collection(dbService, "foods"));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -19,11 +30,51 @@ function AllItems() {
         })
       );
     });
+    let order_createdAt = [];
+    let food_createdAt = [];
+    const ordersCol = collection(dbService, "orders");
+    const foodsCol = collection(dbService, "foods");
+    const orderDocRef = query(
+      ordersCol,
+      orderBy("createdAt_order", "desc"),
+      limit(3)
+    );
+    const foodDocRef = query(foodsCol);
+    const orderSnapshots = await getDocs(orderDocRef);
+    orderSnapshots.forEach((doc) => {
+      const obj = {
+        id_order: doc.id,
+        id: doc.data().id,
+        createdAt: doc.data().createdAt,
+      };
+      order_createdAt.push(obj);
+    });
+    const foodSnapshots = await getDocs(foodDocRef);
+    foodSnapshots.forEach((doc) => {
+      const obj = { id: doc.id, createdAt: doc.data().createdAt };
+      food_createdAt.push(obj);
+    });
+    let intersection;
+    intersection = order_createdAt.filter((element) =>
+      food_createdAt.map((e) => e.createdAt === element.createdAt)
+    );
+    console.log(intersection);
+    intersection.map(async (e) => {
+      const fileRef = ref(storageService, `/images/${e.createdAt}`);
+      const q = query(doc(dbService, "foods", `${e.id}`));
+      const q2 = query(doc(dbService, "orders", `${e.id_order}`));
+      await deleteObject(fileRef);
+      await deleteDoc(q);
+      await deleteDoc(q2);
+      window.location.reload();
+    });
   };
 
   useEffect(() => {
     setFoods([]);
-    getFoods();
+    onSnapshot(query(collection(dbService, "orders")), (snapshot) => {
+      deleteFood();
+    });
   }, []);
 
   return (
