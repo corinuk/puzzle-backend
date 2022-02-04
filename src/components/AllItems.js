@@ -60,6 +60,7 @@ function AllItems() {
     );
     intersection.map(async ({ createdAt, id, id_order }) => {
       const fileRef = ref(storageService, `/images/${createdAt}`);
+
       const q = query(doc(dbService, "foods", `${id}`));
       const q2 = query(doc(dbService, "orders", `${id_order}`));
       await deleteObject(fileRef);
