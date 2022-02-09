@@ -16,6 +16,7 @@ function ImgUpload({ imgUploadBtn, file, setFile }) {
       const {
         currentTarget: { result },
       } = event;
+      console.log(event);
       setFile(result);
     };
     fileReader.onerror = (err) => console.error(err);
