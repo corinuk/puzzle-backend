@@ -32,9 +32,7 @@ function Item({
   } = styles;
 
   const onClick = async (event) => {
-    if (
-      window.confirm("ㄹㅇ 삭제할꺼? ( 절대 되돌릴 수 없으니 잘 생각해야함 )")
-    ) {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
       const item = event.target.parentNode.parentNode.parentNode;
       item.remove();
       const q = query(doc(dbService, "foods", `${id}`));
