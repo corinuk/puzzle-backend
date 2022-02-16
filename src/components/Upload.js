@@ -11,7 +11,9 @@ function Upload({
   address,
   price,
   saledPrice,
-  deadline,
+  ampm,
+  deadlineHours,
+  deadlineMinutes,
   file,
   setFile,
   onChange,
@@ -68,11 +70,27 @@ function Upload({
       />
       <input
         required
-        name="deadline"
-        value={deadline}
+        name="ampm"
+        value={ampm}
         onChange={onChange}
         type="text"
-        placeholder="마감시간"
+        placeholder="오전 or 오후"
+      />
+      <input
+        required
+        name="deadlineHours"
+        value={deadlineHours}
+        onChange={onChange}
+        type="text"
+        placeholder="시"
+      />
+      <input
+        required
+        name="deadlineMinutes"
+        value={deadlineMinutes}
+        onChange={onChange}
+        type="text"
+        placeholder="분"
       />
       <input className={submitBtn} type="submit" value="올리기" />
     </form>

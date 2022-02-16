@@ -14,7 +14,9 @@ function PuzzleBackend() {
   const [address, setAddress] = useState("");
   const [price, setPrice] = useState("");
   const [saledPrice, setSaledPrice] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [ampm, setAmpm] = useState("");
+  const [deadlineHours, setDeadlineHours] = useState("");
+  const [deadlineMinutes, setDeadlineMinutes] = useState("");
 
   const { uploadForm, submitBtn, imgUploadBtn } = styles;
 
@@ -31,7 +33,9 @@ function PuzzleBackend() {
         address,
         price,
         saledPrice,
-        deadline,
+        ampm,
+        deadlineHours,
+        deadlineMinutes,
         createdAt,
         fileURL,
       });
@@ -55,8 +59,12 @@ function PuzzleBackend() {
       setPrice(value);
     } else if (name === "saledPrice") {
       setSaledPrice(value);
-    } else if (name === "deadline") {
-      setDeadline(value);
+    } else if (name === "ampm") {
+      setAmpm(value);
+    } else if (name === "deadlineHours") {
+      setDeadlineHours(value);
+    } else if (name === "deadlineMinutes") {
+      setDeadlineMinutes(value);
     }
   };
 
@@ -72,7 +80,9 @@ function PuzzleBackend() {
         address={address}
         price={price}
         saledPrice={saledPrice}
-        deadline={deadline}
+        ampm={ampm}
+        deadlineHours={deadlineHours}
+        deadlineMinutes={deadlineMinutes}
         file={file}
         setFile={setFile}
         onChange={onChange}
