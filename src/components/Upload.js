@@ -12,6 +12,7 @@ function Upload({
   price,
   saledPrice,
   ampm,
+  count,
   deadlineHours,
   deadlineMinutes,
   file,
@@ -75,6 +76,14 @@ function Upload({
         onChange={onChange}
         type="text"
         placeholder="오전 or 오후"
+      />
+      <input
+        required
+        name="count"
+        value={count}
+        onChange={onChange}
+        type="number"
+        placeholder="개수"
       />
       <input
         required

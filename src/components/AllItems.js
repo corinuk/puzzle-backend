@@ -87,7 +87,8 @@ function AllItems() {
           address,
           price,
           saledPrice,
-          deadline,
+          deadlineHours,
+          deadlineMinutes,
           fileURL,
           createdAt,
         }) => (
@@ -99,7 +100,8 @@ function AllItems() {
             address={address}
             prevPrice={Number(price)}
             saledPrice={Number(saledPrice)}
-            deadline={deadline}
+            deadlineHours={deadlineHours}
+            deadlineMinutes={deadlineMinutes}
             fileURL={fileURL}
             createdAt={createdAt}
           />

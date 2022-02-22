@@ -11,7 +11,8 @@ function Item({
   address,
   prevPrice,
   saledPrice,
-  deadline,
+  deadlineHours,
+  deadlineMinutes,
   fileURL,
   createdAt,
 }) {
@@ -61,7 +62,7 @@ function Item({
             할인가 : {Number(`${saledPrice}`).toLocaleString("en")}원
           </span>
           <span className={`${detail} ${deadlineClass}`}>
-            마감시간 : {deadline}
+            마감시간 : {deadlineHours}:{deadlineMinutes}
           </span>
         </div>
         <button className={deleteBtn} onClick={onClick}>
@@ -77,7 +78,6 @@ Item.propTypes = {
   place: PropTypes.string.isRequired,
   prevPrice: PropTypes.number.isRequired,
   saledPrice: PropTypes.number.isRequired,
-  deadline: PropTypes.string.isRequired,
 };
 
 export default Item;

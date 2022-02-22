@@ -15,6 +15,7 @@ function PuzzleBackend() {
   const [price, setPrice] = useState("");
   const [saledPrice, setSaledPrice] = useState("");
   const [ampm, setAmpm] = useState("");
+  const [count, setCount] = useState("");
   const [deadlineHours, setDeadlineHours] = useState("");
   const [deadlineMinutes, setDeadlineMinutes] = useState("");
 
@@ -34,6 +35,7 @@ function PuzzleBackend() {
         price,
         saledPrice,
         ampm,
+        count,
         deadlineHours,
         deadlineMinutes,
         createdAt,
@@ -61,6 +63,8 @@ function PuzzleBackend() {
       setSaledPrice(value);
     } else if (name === "ampm") {
       setAmpm(value);
+    } else if (name === "count") {
+      setCount(value);
     } else if (name === "deadlineHours") {
       setDeadlineHours(value);
     } else if (name === "deadlineMinutes") {
@@ -81,6 +85,7 @@ function PuzzleBackend() {
         price={price}
         saledPrice={saledPrice}
         ampm={ampm}
+        count={count}
         deadlineHours={deadlineHours}
         deadlineMinutes={deadlineMinutes}
         file={file}
