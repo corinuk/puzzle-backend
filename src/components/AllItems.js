@@ -58,16 +58,16 @@ function AllItems() {
     intersection = order_createdAt.filter((element) =>
       food_createdAt.map((e) => e.createdAt === element.createdAt)
     );
-    // intersection.map(async ({ createdAt, id, id_order }) => {
-    //   const fileRef = ref(storageService, `/images/${createdAt}`);
+    intersection.map(async ({ createdAt, id, id_order }) => {
+      const fileRef = ref(storageService, `/images/${createdAt}`);
 
-    //   const q = query(doc(dbService, "foods", `${id}`));
-    //   const q2 = query(doc(dbService, "orders", `${id_order}`));
-    //   await deleteObject(fileRef);
-    //   await deleteDoc(q);
-    //   await deleteDoc(q2);
-    //   window.location.reload();
-    // });
+      const q = query(doc(dbService, "foods", `${id}`));
+      const q2 = query(doc(dbService, "orders", `${id_order}`));
+      await deleteObject(fileRef);
+      await deleteDoc(q);
+      await deleteDoc(q2);
+      window.location.reload();
+    });
   };
 
   useEffect(() => {
